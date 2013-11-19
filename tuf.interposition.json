@@ -4,7 +4,7 @@
       "repository_directory": "client/",
       "repository_mirrors" : {
         "mirror1": {
-          "url_prefix": "127.0.0.1",
+          "url_prefix": "http://localhost",
           "metadata_path": "metadata",
           "targets_path": "targets",
           "confined_target_dirs": [ "" ]

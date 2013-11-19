@@ -20,9 +20,16 @@ Updated 1/23/2009 use servicelogger to log errors - Xuanhua (Sean)s Ren
 import sys
 import os
 
-import tuf.interposition
+import tuf
 
-tuf.interposition.configure()
+import tuf.log
+from tuf.interposition import urllib_tuf
+
+tuf.log.add_console_handler()
+try:
+	tuf.interposition.configure()
+except tuf.Error, error:
+	sys.exit('TUF couldn\'t initialize')
 
 # AR: Determine whether we're running on Android
 try:
@@ -173,13 +180,12 @@ def get_file_hash(filename):
 # We'll use this to get a file.   If it doesn't download in a reasonable time, 
 # we'll fail. (BUG: doesn't do this yet.   I use timeouts, but they don't
 # always work)
-@tuf.interposition.open_url
-def safe_download(serverpath, filename, destdir, filesize):
+def safe_download(filename,serverpath, destdir, filesize):
   # TODO: filesize isn't being used.
   # TODO: raise an RsyncError from here if the download fails instead of
   #       returning True/False.
   try:
-    urllib.urlretrieve(serverpath+filename,destdir+filename)
+    urllib_tuf.urlretrieve(serverpath+filename,destdir+filename)
     return True
 
   except Exception,e:
@@ -282,7 +288,7 @@ def do_rsync(serverpath, destdir, tempdir):
   """
 
   # get the metainfo (like a directory listing)
-  metainfo_downloaded = safe_download(serverpath, "metainfo", tempdir, 1024*32)
+  metainfo_downloaded = safe_download("metainfo",serverpath, tempdir, 1024*32)
   print 'Metainfo dl: ',metainfo_downloaded
   # if downloading the new metainfo failed, then we can't really do anything
   if not metainfo_downloaded:
@@ -414,7 +420,7 @@ def do_rsync(serverpath, destdir, tempdir):
     if shoulddownloadfile:
       # get the file
       print 'Starting download...'
-      safe_download(serverpath, filename, tempdir, filesize)
+      safe_download(filename,serverpath, tempdir, filesize)
 
       # The hash doesn't match what we expected it to be according to the signed metainfo.
       if get_file_hash(tempdir+filename) != filehash:
