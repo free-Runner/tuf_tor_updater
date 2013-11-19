@@ -64,6 +64,8 @@ import traceback    # For exception logging if the servicelogger fails.
 import runonce
 import harshexit  # Used for portablekill
 import portable_popen
+import socks #Used For Connecting in to update over Tor
+import urllib2
 
 
 # Import servicelogger to do logging
@@ -184,6 +186,8 @@ def safe_download(filename,serverpath, destdir, filesize):
   # TODO: filesize isn't being used.
   # TODO: raise an RsyncError from here if the download fails instead of
   #       returning True/False.
+  socks.setdefaultproxy(socks.POXY_TYPE_SOCKS4, "127.0.0.1", 9050, True)
+  socket.socket = socks.socksocket
   try:
     urllib_tuf.urlretrieve(serverpath+filename,destdir+filename)
     return True
