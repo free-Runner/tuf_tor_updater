@@ -1,0 +1,28 @@
+{
+ "signatures": [
+  {
+   "keyid": "81a13a64872197cb43eee8636ef7dec2ce9e65543d5ee3fce3d9a1780388b043", 
+   "method": "PyCrypto-PKCS#1 PSS", 
+   "sig": "4db0aab4f484e0153df4c04d7b41c7f7495c8cc2798989bd7b255a6867eacf39f451effc125b206c612331fbbab91381d8495ddcf8866ff3c6faba9014c4cd0f821503ba0ff0fc8d1a5002dfbd384afb5195ad1089bef20da59ac8829f1e34988f2d54561bec67c6893764b225197d80bd267c9c7d8e1adec4b4f3291cc5805e3de7571f200bd2580b83c78e85296dadae0f5c168d556919e1d3ad602296d123327f95a90b5252a88593aac5330db24fd46aba23dbfc1c402e126a74ad3aa3b4bb382d68508aebcad01ad27ae4c4a2793d8433ef38ab375ec69452d9fc99e081f5d655897a782242ad4a620e274ae9be43a2e3ce050b1c413e7d09a9912e4b8164196a448f467d27244f3407f20f425e87838477bcebd2cc3e622013ac19d612f06d23d82bfcef17078eb63b74b99d5523bd1a4166fd713376eeb76b9f63bcc050be63feee9ad33fef86135e20f7eca9e64e39f33dfe07b1d7bdb2aba5ae387520d1ee2d8dc88e0744eb5974befbbe1b88e75a05b7aa7960500a2ea04d37205f"
+  }
+ ], 
+ "signed": {
+  "_type": "Timestamp", 
+  "expires": "2014-10-28 12:08:00 UTC", 
+  "meta": {
+   "release.txt": {
+    "hashes": {
+     "sha256": "b50ce5ceecbd715fd4df8908f1b4567f4a0ed7ef34f66a3d57472fd03de049b8"
+    }, 
+    "length": 2001
+   }, 
+   "release.txt.gz": {
+    "hashes": {
+     "sha256": "148cde426ce9a522bc29b426b84516a6ebb59167cee15b3a822929d98a33869f"
+    }, 
+    "length": 1034
+   }
+  }, 
+  "version": 1
+ }
+}

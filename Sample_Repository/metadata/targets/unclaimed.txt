@@ -1,0 +1,38 @@
+{
+ "signatures": [
+  {
+   "keyid": "1ca55433992f041f39b806f6aaf272ffd46eef3b910616e4bdaba07c6e0d5c7c", 
+   "method": "PyCrypto-PKCS#1 PSS", 
+   "sig": "575e6d5b6ac18bf184a0106ca24fcaa4494002ec09ca241d02a8e01dc515d8a0a31c9d3d5a07e0f9ae58d25673b4a8f178a342cba5ade5bcd2853d4b7a9bd9d7887e075eb71e39a14dab9cc7c883cb6143171d223f6a64f924e61750648312ae62039868e766ea4e8933f02b7e9dea869873a1b147e24667b18cf102332ee980a26b330b4bfef3415c82dd04d80a7a9456eb10cbc3a963403849647f8c56397fe4afea6c36eb82adfe68529bdc4cff336344aeedfaa24a8175a7035814ee5d34568a02dad0190c64a676857f6e663e35d5ddae6131ce3df6b664053a1a5e3375b520c07af2624d865d02492d7055e5f8e7f76b6592b237453ee1acd3fe35a823"
+  }
+ ], 
+ "signed": {
+  "_type": "Targets", 
+  "delegations": {
+   "keys": {
+    "1ca55433992f041f39b806f6aaf272ffd46eef3b910616e4bdaba07c6e0d5c7c": {
+     "keytype": "rsa", 
+     "keyval": {
+      "private": "", 
+      "public": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA35qqIYHOtooNB2mkxlKc\n6VXZhaCR98xiexrTHRc+8LxOwxz6d1QAG/iKC+Y4VTXArGspDNkpz7bpLJcZZcGU\nZaLN6egUscgcdoxHY2qTAhxzw3yxZhbJUNViOwCHIuvbHSoyz7BePut0lY1C6DBk\n7p3meEXnD0oaj0C9FT6xR5Y+QsJ5zcrvQuNz1Qi/6V+8q00aiHSBX2YwQO4z84kJ\n/GBdJhYf5Q+T27JjmXTgOUkR2BO83SIv1ihYa0hXO2y19HURZhXrtW4tnN4ow5dU\nUUnibpG57l0qVIVUhmGYAY14pNRONyVcYar/QzNh8mwIEvNQHIsE+rcwuw28wgPu\nywIDAQAB\n-----END PUBLIC KEY-----"
+     }
+    }
+   }, 
+   "roles": [
+    {
+     "keyids": [
+      "1ca55433992f041f39b806f6aaf272ffd46eef3b910616e4bdaba07c6e0d5c7c"
+     ], 
+     "name": "targets/unclaimed/django", 
+     "paths": [
+      "django"
+     ], 
+     "threshold": 1
+    }
+   ]
+  }, 
+  "expires": "2014-02-19 07:50:58 UTC", 
+  "targets": {}, 
+  "version": 2
+ }
+}

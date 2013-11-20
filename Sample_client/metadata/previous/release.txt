@@ -1,0 +1,52 @@
+{
+ "signatures": [
+  {
+   "keyid": "a3d91af9d14d3f04bbba2a44cdd345b31ca05928a4d70d45a4ad620a77e88573", 
+   "method": "PyCrypto-PKCS#1 PSS", 
+   "sig": "1402f415f2cee9fb6219b5d4d161054d3eac07e514fa0c4c8a4cbf8c1de57ce5124d4f40213bee01cbd32e94532fb67b5c7a8e83cf2b74e89875173b0f6d86c9fc3f84175819624381b516b75c5d23346fbd7de532130a279b2924d4ee82c4c7b0fe1e046a68c05ca6910e22172026e08e023a4b4d50a47c58d6306ac6b63ca7a6decae4260bedb13e29fc99f5d8e7ecc9a42c5d8d2f01acfbaaa90c3fabb8098b878602913dc6cd910c55e0f9c5df9561b7facbf1117b7aac8fc900741eff95e7806d2655d3c3233441c124b5332c5f4b786cec72571987f30bc4d04a65a2c154b802078dd0caab138a8203b227668e9245b57524e6b33c63cbee8d9a73ed700c7d51d3999df4c381ee644215a2f2d847abff90a2a32e2b2a24d4720a8c3bdd3b480282b33dc76bf65a9b0fa06bc39cbfb10d8c80be8b097a91c1d442570d7ba712f4e9fd499d087c4fcebbfe07028e341783584cd5e118b15bdec5132add682569554d93131cc09942323740e34d1db115da2dc9b79f9471460429f40cbfe7"
+  }
+ ], 
+ "signed": {
+  "_type": "Release", 
+  "expires": "2013-11-27 00:23:41 UTC", 
+  "meta": {
+   "root.txt": {
+    "hashes": {
+     "sha256": "b9a021f9fbf599482aa86f71c418a42f2cbb28fb24116e3c2571b9c3ad266b0b"
+    }, 
+    "length": 7712
+   }, 
+   "targets.txt": {
+    "hashes": {
+     "sha256": "88e8720e3ea9b77a66505e95e90626a7991c4e8e47be3b1ab3ade59c2e1059ca"
+    }, 
+    "length": 2397
+   }, 
+   "targets.txt.gz": {
+    "hashes": {
+     "sha256": "ddc1268a9e06cfc8e7d7dc7f7ad7c74d3e9dd21a84dc629ee3236863cc89c8e7"
+    }, 
+    "length": 1473
+   }, 
+   "targets/unclaimed.txt": {
+    "hashes": {
+     "sha256": "1c12d0aa651e61bd02e37ef25dcf83a5303026a57f0b9c01b7f730495342602c"
+    }, 
+    "length": 1694
+   }, 
+   "targets/unclaimed/django.txt": {
+    "hashes": {
+     "sha256": "848a20517eb47e3628c62c34f4e277f1b1013e685822c7da7d2d17312d8eb7df"
+    }, 
+    "length": 846
+   }, 
+   "targets/unclaimed/django.txt.gz": {
+    "hashes": {
+     "sha256": "61e9b38ede3063c09ac4e488283f1e5a1fa972d2bdc7dfc62e5f0f0f17c51041"
+    }, 
+    "length": 564
+   }
+  }, 
+  "version": 1
+ }
+}
