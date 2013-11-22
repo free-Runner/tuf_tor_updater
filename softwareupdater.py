@@ -20,10 +20,6 @@ Updated 1/23/2009 use servicelogger to log errors - Xuanhua (Sean)s Ren
 import sys
 import os
 
-import tuf.interposition
-
-#tuf.interposition.configure()
-
 # AR: Determine whether we're running on Android
 try:
   import android
@@ -58,13 +54,19 @@ import runonce
 import harshexit  # Used for portablekill
 import portable_popen
 
-
-import tuf.interposition
+# adding tuf functionality
+import tuf
+import tuf.log
 from tuf.interposition import urllib_tuf
+
+tuf.log.add_console_handler()
 
 basic_tuf_directory = os.path.dirname(__file__)
 tuf_interposition_json = os.path.join(basic_tuf_directory, 'tuf.interposition.json')
-tuf.interposition.configure(filename=tuf_interposition_json, parent_repository_directory=basic_tuf_directory)
+try:
+	tuf.interposition.configure(filename=tuf_interposition_json, parent_repository_directory=basic_tuf_directory)
+except tuf.Error, error:
+	sys.exit('TUF couldn\'t initialize')
 
 # Import servicelogger to do logging
 import servicelogger
@@ -185,7 +187,7 @@ def safe_download(serverpath, filename, destdir, filesize):
   # TODO: raise an RsyncError from here if the download fails instead of
   #       returning True/False.
   try:
-    urllib_tuf.urlretrieve(serverpath+filename,destdir+filename)
+    urllib_tuf.urlretrieve(serverpath+filename,destdir+filename)	#Interposition occurs here
     return True
 
   except Exception,e:
@@ -289,7 +291,6 @@ def do_rsync(serverpath, destdir, tempdir):
 
   # get the metainfo (like a directory listing)
   metainfo_downloaded = safe_download(serverpath, "metainfo", tempdir, 1024*32)
-  print 'Metainfo dl: ',metainfo_downloaded
   # if downloading the new metainfo failed, then we can't really do anything
   if not metainfo_downloaded:
     safe_log("[do_rsync] Failed to download metainfo. Not updating.")
@@ -801,7 +802,6 @@ def main():
       misc.do_sleep(30)
       # Make sure we still have the process lock.
       # If not, we should exit
-      print 'There'
       if not runonce.stillhaveprocesslock('softwareupdater.old'):
         safe_log('[main] We no longer have the processlock\n')
         sys.exit(55)
@@ -814,7 +814,6 @@ def main():
       
     # where I'll put files...
     tempdir = tempfile.mkdtemp()+"/"
-    #print 'Here', tempdir
 
 
     # I'll clean this up in a minute
@@ -827,7 +826,6 @@ def main():
     finally:
       shutil.rmtree(tempdir)
 
-    #print 'Stopping after One try'
     break #STOP AFTER ONE
 
     # no updates   :)   Let's wait again...

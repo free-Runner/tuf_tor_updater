@@ -1,0 +1,26 @@
+{
+  // This is a required root object.
+  "configurations": {
+    // Which network location should we intercept?
+    // Network locations may be specified as "hostname" or "hostname:port".
+    "seattle.poly.edu": {
+      // Where do we find the client copy of the TUF server metadata?
+      "repository_directory": "client/",
+      // Where do we forward the requests to seattle.poly.edu?
+      "repository_mirrors" : {
+        "mirror1": {
+          // In this case, we forward them to http://tuf.seattle.poly.edu
+          "url_prefix": "http://tuf.seattle.poly.edu",
+          // You do not have to worry about these default parameters.
+          "metadata_path": "metadata",
+          "targets_path": "targets",
+          "confined_target_dirs": [ "" ]
+        },
+        // You could specify more repository mirrors.
+        ...
+      }
+    }
+  },
+  // You could specify more network locations.
+  ...
+}
