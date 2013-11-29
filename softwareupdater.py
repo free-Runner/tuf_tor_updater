@@ -61,7 +61,9 @@ from tuf.interposition import urllib_tuf
 
 tuf.log.add_console_handler()
 
+
 basic_tuf_directory = os.path.dirname(__file__)
+
 tuf_interposition_json = os.path.join(basic_tuf_directory, 'tuf.interposition.json')
 try:
 	tuf.interposition.configure(filename=tuf_interposition_json, parent_repository_directory=basic_tuf_directory)

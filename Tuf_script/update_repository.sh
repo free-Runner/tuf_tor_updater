@@ -14,7 +14,7 @@ cp -r * /home/laiwang/Documents/repository_tool/targets_files
 echo "* Generate tuf repository with repository_operator.py."
 echo "* python repository_operator.py --generate_repository targets_files"
 cd /home/laiwang/Documents/repository_tool/
-python repository_operator.py --generate_repository targets_files
+python repository_operator.py --update_repository targets_files
 echo "* Update the metadata on server."
 cd /home/laiwang/Documents/apache_Server/
 rm -r *
@@ -22,8 +22,8 @@ cd /home/laiwang/Documents/repy_tuf/
 #rm -r ./client/
 cd /home/laiwang/Documents/repository_tool/path/to/repository/
 cp -r * /home/laiwang/Documents/apache_Server/
-cd /home/laiwang/Documents/repository_tool/path/to/
-cp -r client/ /home/laiwang/Documents/repy_tuf/
+#cd /home/laiwang/Documents/repository_tool/path/to/
+#cp -r client/ /home/laiwang/Documents/repy_tuf/
 #cd /home/laiwang/Documents/repy_tuf/
 #echo "* Okay, we'll try to download the update on client side."
 #echo "* python softwareupdater.py"

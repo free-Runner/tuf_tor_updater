@@ -1,15 +1,15 @@
 from tuf.libtuf import *
 
 
-generate_and_write_rsa_keypair("./keys/root_key", bits=2048, password="a")
+generate_and_write_rsa_keypair("./keys/test_key", bits=2048, password="a")
 #Prompts password;
 #generate_and_write_rsa_keypair("path/to/root_key2")
-public_root_key = import_rsa_publickey_from_file("./keys/root_key.pub")
-private_root_key = import_rsa_privatekey_from_file("./keys/root_key")
+public_root_key = import_rsa_publickey_from_file("./keys/test_key.pub")
+private_root_key = import_rsa_privatekey_from_file("./keys/test_key")
 # Create a new Repository object that holds the file path to the repository and the four
 # top-level role objects (Root, Targets, Release, Timestamp). Metadata files are created when
 # repository.write() is called.  The repository directory is created if it does not exist.
-repository = create_new_repository("./new_repo")
+repository = create_new_repository("./test")
 # The Repository instance, 'repository', initially contains top-level Metadata objects.
 # Add one of the public keys, created in the previous section, to the root role.  Metadata is
 # considered valid if it is signed by the public key's corresponding private key.
