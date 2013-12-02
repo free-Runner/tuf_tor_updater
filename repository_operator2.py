@@ -3,7 +3,7 @@ import sys
 import shutil
 from tuf.libtuf import *
 
-#Set base path/password below
+#Set base path/password
 PATH = "repo/"
 #This is temporary... user should be prompted for password?
 PASSWORD = "lw1378"
