@@ -10,6 +10,9 @@ from tuf.formats import parse_time
 from tuf.formats import format_time
 
 TIMESTAMP_EXPIRATION = 86400
+ROOT_EXPIRATION = 31556900
+TARGETS_EXPIRATION = 7889230
+RELEASE_EXPIRATION = 604800
 
 class Make_repository:
   def __init__(self):
@@ -186,6 +189,92 @@ class Make_repository:
       timestamp_dic = literal_eval(timestamp_File.read())
       expire_time = parse_time(timestamp_dic['signed']['expires'])
       repository.timestamp.expiration = str(format_time(expire_time + TIMESTAMP_EXPIRATION)).replace(" UTC", "")
+      #print format_time(expire_time + TIMESTAMP_EXPIRATION)
+    except Exception, e:
+      print 'Failed to update the expire date since', str(e)
+
+    try:
+      repository.write()
+    except tuf.Error, e:
+      print 'Failed to achieve the goal as ', str(e)
+
+  def load_release(self):
+    # By default, the timestamp will expire in one day, so we have to load the signature again
+    repository = load_repository(self.repository_path)
+
+    private_root_key = import_rsa_privatekey_from_file("path/to/root_key", "lw1378")
+    repository.root.load_signing_key(private_root_key)
+    private_targets_key = import_rsa_privatekey_from_file("path/to/targets_key", "lw1378")
+    repository.targets.load_signing_key(private_targets_key)
+    private_timestamp_key = import_rsa_privatekey_from_file("path/to/timestamp_key", "lw1378")
+    repository.timestamp.load_signing_key(private_timestamp_key)
+    private_release_key = import_rsa_privatekey_from_file("path/to/release_key", "lw1378")
+    repository.release.load_signing_key(private_release_key)
+
+    # Load current time stamp
+    try:
+      release_File = open("path/to/repository/metadata.staged/release.txt", "r")
+      release_dic = literal_eval(release_File.read())
+      expire_time = parse_time(release_dic['signed']['expires'])
+      repository.release.expiration = str(format_time(expire_time + RELEASE_EXPIRATION)).replace(" UTC", "")
+      #print format_time(expire_time + TIMESTAMP_EXPIRATION)
+    except Exception, e:
+      print 'Failed to update the expire date since', str(e)
+
+    try:
+      repository.write()
+    except tuf.Error, e:
+      print 'Failed to achieve the goal as ', str(e)
+
+  def load_targets(self):
+    # By default, the timestamp will expire in one day, so we have to load the signature again
+    repository = load_repository(self.repository_path)
+
+    private_root_key = import_rsa_privatekey_from_file("path/to/root_key", "lw1378")
+    repository.root.load_signing_key(private_root_key)
+    private_targets_key = import_rsa_privatekey_from_file("path/to/targets_key", "lw1378")
+    repository.targets.load_signing_key(private_targets_key)
+    private_timestamp_key = import_rsa_privatekey_from_file("path/to/timestamp_key", "lw1378")
+    repository.timestamp.load_signing_key(private_timestamp_key)
+    private_release_key = import_rsa_privatekey_from_file("path/to/release_key", "lw1378")
+    repository.release.load_signing_key(private_release_key)
+
+    # Load current time stamp
+    try:
+      targets_File = open("path/to/repository/metadata.staged/targets.txt", "r")
+      targets_dic = literal_eval(targets_File.read())
+      expire_time = parse_time(targets_dic['signed']['expires'])
+      repository.targets.expiration = str(format_time(expire_time + TARGETS_EXPIRATION)).replace(" UTC", "")
+      #print format_time(expire_time + TIMESTAMP_EXPIRATION)
+    except Exception, e:
+      print 'Failed to update the expire date since', str(e)
+
+    try:
+      repository.write()
+    except tuf.Error, e:
+      print 'Failed to achieve the goal as ', str(e)
+
+  def load_root(self):
+    # By default, the timestamp will expire in one day, so we have to load the signature again
+    repository = load_repository(self.repository_path)
+
+    private_root_key = import_rsa_privatekey_from_file("path/to/root_key", "lw1378")
+    repository.root.load_signing_key(private_root_key)
+    private_root_key2 = import_rsa_privatekey_from_file("path/to/root_key2", "lw1378")
+    repository.root.load_signing_key(private_root_key2)
+    private_targets_key = import_rsa_privatekey_from_file("path/to/targets_key", "lw1378")
+    repository.targets.load_signing_key(private_targets_key)
+    private_timestamp_key = import_rsa_privatekey_from_file("path/to/timestamp_key", "lw1378")
+    repository.timestamp.load_signing_key(private_timestamp_key)
+    private_release_key = import_rsa_privatekey_from_file("path/to/release_key", "lw1378")
+    repository.release.load_signing_key(private_release_key)
+
+    # Load current time stamp
+    try:
+      root_File = open("path/to/repository/metadata.staged/root.txt", "r")
+      root_dic = literal_eval(root_File.read())
+      expire_time = parse_time(root_dic['signed']['expires'])
+      repository.root.expiration = str(format_time(expire_time + ROOT_EXPIRATION)).replace(" UTC", "")
       #print format_time(expire_time + TIMESTAMP_EXPIRATION)
     except Exception, e:
       print 'Failed to update the expire date since', str(e)
@@ -427,6 +516,131 @@ def refresh_timestamp_expire_data():
     print 'Error,', str(e)
     sys.exit(0)
 
+def refresh_release_expire_data():
+  mr = Make_repository()
+  mr.load_release()
+  mr.make_metadata_dir()
+  mr.make_client_dir()
+  rep_path = "path/to/repository/"
+
+  # Input server path
+  while True:
+    server_path = raw_input('Input Server path:')
+    if os.path.exists(server_path):
+      print 'Server path: ', server_path
+      break
+    else:
+      print 'Server path is either invalid or server path does not exist!'
+
+  copy_files(rep_path, server_path)
+  # Modify the server, remove the keys of root and targets roles
+  try:
+    server_fileList = os.listdir(server_path)
+    for files in server_fileList:
+      files_path = os.path.join(server_path, files)
+      if files == 'metadata.staged':
+        if os.path.isdir(files_path):
+          shutil.rmtree(files_path)
+          continue
+        os.remove(files_path)
+      if files == 'metadata' and os.path.isdir(files_path):
+        role_path = os.path.join(server_path, "metadata")
+        role_fileList = os.listdir(role_path)
+        for roles in role_fileList:
+          roles_path = os.path.join(role_path, roles)
+          if roles == 'root.txt':
+            os.remove(roles_path)
+            continue
+          if roles == 'targets.txt':
+            os.remove(roles_path)
+            continue
+  except Exception, e:
+    print 'Error,', str(e)
+    sys.exit(0)
+
+def refresh_targets_expire_data():
+  mr = Make_repository()
+  mr.load_targets()
+  mr.make_metadata_dir()
+  mr.make_client_dir()
+  rep_path = "path/to/repository/"
+
+  # Input server path
+  while True:
+    server_path = raw_input('Input Server path:')
+    if os.path.exists(server_path):
+      print 'Server path: ', server_path
+      break
+    else:
+      print 'Server path is either invalid or server path does not exist!'
+
+  copy_files(rep_path, server_path)
+  # Modify the server, remove the keys of root and targets roles
+  try:
+    server_fileList = os.listdir(server_path)
+    for files in server_fileList:
+      files_path = os.path.join(server_path, files)
+      if files == 'metadata.staged':
+        if os.path.isdir(files_path):
+          shutil.rmtree(files_path)
+          continue
+        os.remove(files_path)
+      if files == 'metadata' and os.path.isdir(files_path):
+        role_path = os.path.join(server_path, "metadata")
+        role_fileList = os.listdir(role_path)
+        for roles in role_fileList:
+          roles_path = os.path.join(role_path, roles)
+          if roles == 'root.txt':
+            os.remove(roles_path)
+            continue
+          if roles == 'targets.txt':
+            os.remove(roles_path)
+            continue
+  except Exception, e:
+    print 'Error,', str(e)
+    sys.exit(0)
+
+def refresh_root_expire_data():
+  mr = Make_repository()
+  mr.load_root()
+  mr.make_metadata_dir()
+  mr.make_client_dir()
+  rep_path = "path/to/repository/"
+
+  # Input server path
+  while True:
+    server_path = raw_input('Input Server path:')
+    if os.path.exists(server_path):
+      print 'Server path: ', server_path
+      break
+    else:
+      print 'Server path is either invalid or server path does not exist!'
+
+  copy_files(rep_path, server_path)
+  # Modify the server, remove the keys of root and targets roles
+  try:
+    server_fileList = os.listdir(server_path)
+    for files in server_fileList:
+      files_path = os.path.join(server_path, files)
+      if files == 'metadata.staged':
+        if os.path.isdir(files_path):
+          shutil.rmtree(files_path)
+          continue
+        os.remove(files_path)
+      if files == 'metadata' and os.path.isdir(files_path):
+        role_path = os.path.join(server_path, "metadata")
+        role_fileList = os.listdir(role_path)
+        for roles in role_fileList:
+          roles_path = os.path.join(role_path, roles)
+          if roles == 'root.txt':
+            os.remove(roles_path)
+            continue
+          if roles == 'targets.txt':
+            os.remove(roles_path)
+            continue
+  except Exception, e:
+    print 'Error,', str(e)
+    sys.exit(0)
 
 def update_metadata(basic_directory, flag):
   print '*** Hello ...'
@@ -739,6 +953,12 @@ def help_info():
   #print '$python repository_operator.py --generate_file_dir -nd directory_name'
   print '5. Update and refresh the timestamp roles expire date, syntax:'
   print '$python repository_operator.py --refresh_timestamp'
+  print '6. Update and refresh the release roles expire date, syntax:'
+  print '$python repository_operator.py --refresh_release'
+  print '7. Update and refresh the targets roles expire date, syntax:'
+  print '$python repository_operator.py --refresh_targets'
+  print '8. Update and refresh the root roles expire date, syntax:'
+  print '$python repository_operator.py --refresh_root'
   print '"""'
 
 if __name__ == '__main__':
@@ -767,6 +987,12 @@ if __name__ == '__main__':
   elif len(sys.argv) == 2:
     if sys.argv[1] == '--refresh_timestamp':
       refresh_timestamp_expire_data()
+    elif sys.argv[1] == '--refresh_release':
+      refresh_release_expire_data()
+    elif sys.argv[1] == '--refresh_targets':
+      refresh_targets_expire_data()
+    elif sys.argv[1] == '--refresh_root':
+      refresh_root_expire_data()
     elif sys.argv[1] == '--help':
       help_info()
       sys.exit(0)
