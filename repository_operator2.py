@@ -1,4 +1,13 @@
+import os
+import sys
+import shutil
+import tempfile
+import time
+from ast import literal_eval
+from writemetainfo import create_metainfo_file
 from tuf.libtuf import *
+from tuf.formats import parse_time
+from tuf.formats import format_time
 
 #Set base path/password
 PATH = "repo/"
@@ -69,9 +78,9 @@ class Make_repository:
     repository.release.load_signing_key(private_release_key)
     repository.timestamp.load_signing_key(private_timestamp_key)
     # Set the expiration date of the timestamp role.
-    repository.timestamp.expiration = "2014-10-28 12:08:00"
-    repository.targets.compressions = ["gz"]
-    repository.release.compressions = ["gz"]
+    #repository.timestamp.expiration = "2014-10-28 12:08:00"
+    #repository.targets.compressions = ["gz"]
+    #repository.release.compressions = ["gz"]
 
     # Write the repository
     try:
