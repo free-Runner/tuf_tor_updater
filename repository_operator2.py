@@ -195,7 +195,7 @@ class Make_repository:
       print 'Failed to achieve the goal as ', str(e)
 
   def load_release(self):
-    # By default, the timestamp will expire in one day, so we have to load the signature again
+    # By default, the release will expire in one week, so we have to load the signature again
     repository = load_repository(self.repository_path)
 
     private_root_key = import_rsa_privatekey_from_file(PATH+"root_key", PASSWORD)
@@ -207,7 +207,7 @@ class Make_repository:
     private_release_key = import_rsa_privatekey_from_file(PATH+"release_key", PASSWORD)
     repository.release.load_signing_key(private_release_key)
 
-    # Load current time stamp
+    # Load current release
     try:
       release_File = open(PATH+"repository/metadata.staged/release.txt", "r")
       release_dic = literal_eval(release_File.read())
@@ -223,7 +223,7 @@ class Make_repository:
       print 'Failed to achieve the goal as ', str(e)
 
   def load_targets(self):
-    # By default, the timestamp will expire in one day, so we have to load the signature again
+    # By default, the targets will expire in 3 months, so we have to load the signature again
     repository = load_repository(self.repository_path)
 
     private_root_key = import_rsa_privatekey_from_file(PATH+"root_key", PASSWORD)
@@ -235,7 +235,7 @@ class Make_repository:
     private_release_key = import_rsa_privatekey_from_file(PATH+"release_key", PASSWORD)
     repository.release.load_signing_key(private_release_key)
 
-    # Load current time stamp
+    # Load current targets
     try:
       targets_File = open(PATH+"repository/metadata.staged/targets.txt", "r")
       targets_dic = literal_eval(targets_File.read())
@@ -251,7 +251,7 @@ class Make_repository:
       print 'Failed to achieve the goal as ', str(e)
 
   def load_root(self):
-    # By default, the timestamp will expire in one day, so we have to load the signature again
+    # By default, the timestamp will expire in one year, so we have to load the signature again
     repository = load_repository(self.repository_path)
 
     private_root_key = import_rsa_privatekey_from_file(PATH+"root_key", PASSWORD)
@@ -265,7 +265,7 @@ class Make_repository:
     private_release_key = import_rsa_privatekey_from_file(PATH+"release_key", PASSWORD)
     repository.release.load_signing_key(private_release_key)
 
-    # Load current time stamp
+    # Load current root
     try:
       root_File = open(PATH+"repository/metadata.staged/root.txt", "r")
       root_dic = literal_eval(root_File.read())
@@ -397,7 +397,7 @@ def generate_metadata(basic_directory, flag):
     mr.make_client_dir()
   print '*** Process complete ...'
 
-def refresh_timestamp_expire_data():
+def refresh_timestamp_expire_data(server_path=None):
   mr = Make_repository()
   mr.load_timestamp()
   mr.make_metadata_dir()
@@ -405,13 +405,14 @@ def refresh_timestamp_expire_data():
   rep_path = PATH+"repository"
 
   # Input server path
-  while True:
-    server_path = raw_input('Input Server path:')
-    if os.path.exists(server_path):
-      print 'Server path: ', server_path
-      break
-    else:
-      print 'Server path is either invalid or server path does not exist!'
+  if server_path==None:
+    while True:
+      server_path = raw_input('Input Server path:')
+      if os.path.exists(server_path):
+        print 'Server path: ', server_path
+        break
+      else:
+        print 'Server path is either invalid or server path does not exist!'
 
   copy_files(rep_path, server_path)
   # Modify the server, remove the keys of root and targets roles
@@ -439,7 +440,7 @@ def refresh_timestamp_expire_data():
     print 'Error,', str(e)
     sys.exit(0)
 
-def refresh_release_expire_data():
+def refresh_release_expire_data(server_path=None):
   mr = Make_repository()
   mr.load_release()
   mr.make_metadata_dir()
@@ -447,13 +448,14 @@ def refresh_release_expire_data():
   rep_path = PATH+"repository"
 
   # Input server path
-  while True:
-    server_path = raw_input('Input Server path:')
-    if os.path.exists(server_path):
-      print 'Server path: ', server_path
-      break
-    else:
-      print 'Server path is either invalid or server path does not exist!'
+  if server_path==None:
+    while True:
+      server_path = raw_input('Input Server path:')
+      if os.path.exists(server_path):
+        print 'Server path: ', server_path
+        break
+      else:
+        print 'Server path is either invalid or server path does not exist!'
 
   copy_files(rep_path, server_path)
   # Modify the server, remove the keys of root and targets roles
@@ -481,7 +483,7 @@ def refresh_release_expire_data():
     print 'Error,', str(e)
     sys.exit(0)
 
-def refresh_targets_expire_data():
+def refresh_targets_expire_data(server_path=None):
   mr = Make_repository()
   mr.load_targets()
   mr.make_metadata_dir()
@@ -489,13 +491,14 @@ def refresh_targets_expire_data():
   rep_path = PATH+"repository"
 
   # Input server path
-  while True:
-    server_path = raw_input('Input Server path:')
-    if os.path.exists(server_path):
-      print 'Server path: ', server_path
-      break
-    else:
-      print 'Server path is either invalid or server path does not exist!'
+  if server_path==None:
+    while True:
+      server_path = raw_input('Input Server path:')
+      if os.path.exists(server_path):
+        print 'Server path: ', server_path
+        break
+      else:
+        print 'Server path is either invalid or server path does not exist!'
 
   copy_files(rep_path, server_path)
   # Modify the server, remove the keys of root and targets roles
@@ -523,7 +526,7 @@ def refresh_targets_expire_data():
     print 'Error,', str(e)
     sys.exit(0)
 
-def refresh_root_expire_data():
+def refresh_root_expire_data(server_path=None):
   mr = Make_repository()
   mr.load_root()
   mr.make_metadata_dir()
@@ -531,13 +534,14 @@ def refresh_root_expire_data():
   rep_path = PATH+"repository"
 
   # Input server path
-  while True:
-    server_path = raw_input('Input Server path:')
-    if os.path.exists(server_path):
-      print 'Server path: ', server_path
-      break
-    else:
-      print 'Server path is either invalid or server path does not exist!'
+  if server_path==None:
+    while True:
+      server_path = raw_input('Input Server path:')
+      if os.path.exists(server_path):
+        print 'Server path: ', server_path
+        break
+      else:
+        print 'Server path is either invalid or server path does not exist!'
 
   copy_files(rep_path, server_path)
   # Modify the server, remove the keys of root and targets roles
@@ -702,6 +706,14 @@ if __name__ == '__main__':
       update_repository(str(sys.argv[2]), True)
     elif sys.argv[1] == '--generate_file_dir':
       generate_file_dir(str(sys.argv[2]), True)
+    elif sys.argv[1] == '--refresh_timestamp':
+      refresh_timestamp_expire_data(sys.argv[2])
+    elif sys.argv[1] == '--refresh_release':
+      refresh_release_expire_data(sys.argv[2])
+    elif sys.argv[1] == '--refresh_targets':
+      refresh_targets_expire_data(sys.argv[2])
+    elif sys.argv[1] == '--refresh_root':
+      refresh_root_expire_data(sys.argv[2])
     else:
       print 'Illegal args! Use "--help" to get more info.'
       sys.exit(0)
